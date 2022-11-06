@@ -36,8 +36,14 @@ vector<User> Bank::load_users() {
     acc_db.open("data.csv");
     vector<User> account_holders;
     string current_user;
+
+    bool firstLine = true;
     if (acc_db.is_open()) { // always check whether the file is open
         while(getline(acc_db, current_user)) {
+            if (firstLine) {
+                firstLine = false;
+                continue;
+            }
             getline(acc_db, current_user);
             account_holders.push_back(User::parse(current_user));
         }

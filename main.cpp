@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     Bank bank = Bank();
-    // bank.simulate();
+    bank.simulate();
 
     return 0;
 }
