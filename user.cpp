@@ -2,13 +2,13 @@
 
 // getters
 
-string User::getPassword() {
-    return password;
-}
+// string User::getPassword() {
+//     return password;
+// }
 
-int User::getBalance() {
-    return balance;
-}
+// int User::getBalance() {
+//     return balance;
+// }
 
 // setters
 

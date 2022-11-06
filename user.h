@@ -1,10 +1,24 @@
 #include <string>
 using namespace std;
 
+// make password and balance private attributes eventually
 class User {
+    // private:
+    //     // password attribute
+    //     string password;
+
+    //     // balance attribute
+    //     int balance;
+
     public:
         // username attribute
         string username;
+
+        // password attribute
+        string password;
+
+        // balance attribute
+        int balance;
 
         // constructor
         User(string username, string password) {
@@ -21,18 +35,11 @@ class User {
         }
 
         // getters (getUsername not necessary as it is public)
-        string getPassword();
-        int getBalance();
+        // string getPassword();
+        // int getBalance();
 
         // setters
         string changePassword(string revised_password);
         bool withdraw(int withdrawal);
         bool deposit(int deposit);
-
-    private:
-        // password attribute
-        string password;
-
-        // balance attribute
-        int balance;
 };

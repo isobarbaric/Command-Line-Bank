@@ -5,9 +5,7 @@
 #include "user.h"
 using namespace std;
 
-// methods to be implemented
-bool login(string username, string password);
-bool create_account();
+vector<User> account_holders;
 
 // split by delimiters
 User parse(string input_data) {
@@ -27,32 +25,34 @@ User parse(string input_data) {
 }
 
 vector<User> read_data() {
-    fstream fin;
-    fin.open("data.csv", ios::in);
+    ifstream acc_db;
+    acc_db.open("data.csv");
     vector<User> account_holders;
-    // while (getline(file, ID, ',')) {
-        // cout << "ID: " << ID << " " ; 
-
-        // getline(file, nome, ',') ;
-        // cout << "User: " << nome << " " ;
-
-        // getline(file, idade, ',') ;
-        // cout << "Idade: " << idade << " "  ; 
-
-        // getline(file, genero);
-        // cout << "Sexo: " <<  genero<< " "  ;
-        // account_holders.push_back(parse(idk))
-    // }
+    string current_user;
+    if (acc_db.is_open()) { // always check whether the file is open
+        while(getline(acc_db, current_user)) {
+            getline(acc_db, current_user);
+            account_holders.push_back(parse(current_user));
+        }
+    }
     return account_holders;
 }
 
+bool login(string username, string password) {
+    for (int i = 0; i < account_holders.size(); i++) {
+        if (account_holders[i].username == username) {
+            return account_holders[i].password == password;
+        }
+    }
+    return false;
+}
+
+// methods to be implemented
+bool create_account();
+
 int main() {
-    // read_data();
-    // User chad_raccoon("isobarbaric", "monkey");
-    // cout << chad_raccoon.username;
-    User test = parse("gracie_howard, 1234xyz, 530");
-    cout << test.getPassword();
-    // cout << test.username << " " << test.getPassword() << " " << test.getBalance();
+    account_holders = read_data();
+    cout << login("nate_ellison", "abcd1234");
 
     return 0;
 }
