@@ -37,22 +37,25 @@ void Bank::add_user(string username, string password, int balance) {
 
 bool Bank::create_account() {
     cout << "Creating a new account for you:\n";
-    string username, password;
+    string a, b;
 
-    // verify this doesn't exist already
     while (true) {
         cout << "=> Enter your desired username: ";
-        cin >> username;
+        cin >> a;
         bool username_taken = false;
+
+        // verify username doesn't exist already
         for (int i = 0; i < customers.size(); i++) {
-            if (customers[i].username == username) {
+            if (customers[i].username == a) {
                 username_taken = true;
             }
         }
+
         if (username_taken) {
             cout << "This username belongs to another user. Please choose another username.\n";
             continue;
         }
+
         cout << "=> Enter your desired password: ";
 
         // set terminal to raw mode
@@ -65,7 +68,7 @@ bool Bank::create_account() {
                 firstTime = false;
                 continue;
             }
-            password += c;
+            b += c;
             cout << '*';
         }
         cout << '\n';
@@ -83,7 +86,7 @@ bool Bank::create_account() {
             cin >> balance;
         }
 
-        add_user(username, password, balance);
+        add_user(a, b, balance);
 
         // success method
         cout << "\n....Success! Thank you for choosing us!\n";
@@ -97,16 +100,17 @@ bool Bank::create_account() {
 
 vector<User> Bank::load_users() {
     ifstream acc_db;
-    acc_db.open("data.csv");
+    acc_db.open("utilities/data.csv");
     vector<User> account_holders;
     string current_user;
-    bool firstLine = true;
-    while(getline(acc_db, current_user)) {
-        if (firstLine) {
-            firstLine = false;
-            continue;
-        }
+    getline(acc_db, current_user);
+    string previous_user;
+    while(current_user.length() > 0) {
+        previous_user = current_user;
         getline(acc_db, current_user);
+        if (previous_user == current_user) {
+            break;
+        }
         account_holders.push_back(User::parse(current_user));
     }
     acc_db.close();

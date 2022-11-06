@@ -12,16 +12,12 @@ class Bank {
         // constructor
         Bank() {
             customers = load_users();
-        }
-
-        Bank(vector<User> account_holders) {
-            customers = account_holders;
+            // cout << "len(customers) = " << customers.size() << '\n';
         }
 
         void simulate();
 
     private:
-
         vector<User> load_users();
         void login_portal();
         bool process_login(string username, string password);
