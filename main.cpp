@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "user.h"
+
 using namespace std;
 
 vector<User> account_holders;
@@ -52,7 +53,48 @@ bool create_account();
 
 int main() {
     account_holders = read_data();
-    cout << login("nate_ellison", "abcd1234");
+
+    // logging in
+    while (true) {
+        cout << "Welcome to the bank! Please login below or type EXIT to quit.\n";
+        string user, pass;
+        cout << "Enter username here: ";
+        cin >> user;
+
+        if (user == "EXIT") {
+            return 0;
+        }
+
+        cout << "Enter password here: ";
+        pass = "";
+        char c;
+
+        // set terminal to raw mode
+        system("stty raw");
+
+        bool firstTime = true;
+        while ((c = getchar()) != 13) {
+            if (firstTime) {
+                firstTime = false;
+                continue;
+            }
+            pass += c;
+            cout << '*';
+        }
+        cout << '\n';
+
+        // reset terminal to normal cooked mode
+        system("stty cooked");
+
+        // attempt to login
+        if (login(user, pass)) {
+            cout << "\n\n....Success!\n\n";
+        } else {
+            cout << "\n\nInvalid credentials. Try again.\n\n";
+        }
+    }
+
+    // cout << login("nate_ellison", "abcd1234");
 
     return 0;
 }
