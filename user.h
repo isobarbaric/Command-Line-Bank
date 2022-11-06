@@ -10,29 +10,29 @@ class User {
         User(string username, string password) {
             this -> username = username;
             this -> password = password;
+            this -> balance = 0;
         }
 
         // delegate constructors later on
-        User(string username, string password, unsigned balance) {
+        User(string username, string password, int balance) {
             this -> username = username;
             this -> password = password;
             this -> balance = balance;
         }
 
-        // getters
-        string getUsername();
+        // getters (getUsername not necessary as it is public)
         string getPassword();
-        unsigned getBalance();
+        int getBalance();
 
         // setters
         string changePassword(string revised_password);
-        bool withdraw(unsigned withdrawal);
-        bool deposit(unsigned deposit);
+        bool withdraw(int withdrawal);
+        bool deposit(int deposit);
 
     private:
         // password attribute
         string password;
 
         // balance attribute
-        unsigned balance;
+        int balance;
 };

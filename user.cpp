@@ -2,15 +2,11 @@
 
 // getters
 
-string User::getUsername() {
-    return username;
-}
-
 string User::getPassword() {
     return password;
 }
 
-unsigned User::getBalance() {
+int User::getBalance() {
     return balance;
 }
 
@@ -20,7 +16,7 @@ string User::changePassword(string revised_password) {
     password = revised_password;
 }
 
-bool User::withdraw(unsigned withdrawal) {
+bool User::withdraw(int withdrawal) {
     if (withdrawal > balance) {
         return false;
     }
@@ -28,6 +24,6 @@ bool User::withdraw(unsigned withdrawal) {
     return true;
 }
 
-bool User::deposit(unsigned deposit) {
+bool User::deposit(int deposit) {
     balance += deposit;
 }
