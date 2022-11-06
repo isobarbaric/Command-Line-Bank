@@ -55,42 +55,58 @@ int main() {
     account_holders = read_data();
 
     // logging in
-    while (true) {
-        cout << "Welcome to the bank! Please login below or type EXIT to quit.\n";
-        string user, pass;
-        cout << "Enter username here: ";
-        cin >> user;
+    cout << "\n----------------------------------------------------------------\n";
+    cout << "Welcome to the bank! Here are your options:\n- To create a new account, please type in 'n'.\n- To quit, please type in 'esc'.\n- To log in to your existing account, please press 'l'";
+    cout << "\n----------------------------------------------------------------\n";
 
-        if (user == "EXIT") {
+    bool goodInput = false;
+    while (!goodInput) {
+        string choice;
+        cout << "Your choice: ";
+        cin >> choice;
+        if (choice[0] == 'n') {
+            goodInput = true;
+            cout << "creating a new account";
+        } else if (choice == "esc") {
             return 0;
-        }
+        } else if (choice[0] == 'l') {
+            goodInput = true;
+            string user, pass;
 
-        cout << "Enter password here: ";
-        pass = "";
-        char c;
+            cout << "=> Enter username here: ";
+            cin >> user;
 
-        // set terminal to raw mode
-        system("stty raw");
-
-        bool firstTime = true;
-        while ((c = getchar()) != 13) {
-            if (firstTime) {
-                firstTime = false;
-                continue;
+            if (user == "EXIT") {
+                return 0;
             }
-            pass += c;
-            cout << '*';
-        }
-        cout << '\n';
 
-        // reset terminal to normal cooked mode
-        system("stty cooked");
+            cout << "=> Enter password here: ";
+            pass = "";
 
-        // attempt to login
-        if (login(user, pass)) {
-            cout << "\n\n....Success!\n\n";
-        } else {
-            cout << "\n\nInvalid credentials. Try again.\n\n";
+            // set terminal to raw mode
+            system("stty raw");
+
+            char c;
+            bool firstTime = true;
+            while ((c = getchar()) != 13) {
+                if (firstTime) {
+                    firstTime = false;
+                    continue;
+                }
+                pass += c;
+                cout << '*';
+            }
+            cout << '\n';
+
+            // reset terminal to normal cooked mode
+            system("stty cooked");
+
+            // attempt to login
+            if (login(user, pass)) {
+                cout << "\n....Success!\n";
+            } else {
+                cout << "\nInvalid credentials. Try again.\n";
+            }
         }
     }
 
