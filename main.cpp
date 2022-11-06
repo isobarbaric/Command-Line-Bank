@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "bank.h"
+#include "utilities/bank.h"
 using namespace std;
 
 int main() {
