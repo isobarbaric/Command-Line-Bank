@@ -39,7 +39,10 @@ class User {
         // int getBalance();
 
         // setters
-        string changePassword(string revised_password);
+        void changePassword(string revised_password);
         bool withdraw(int withdrawal);
-        bool deposit(int deposit);
+        void deposit(int deposit);
+
+        // other
+        static User parse(string input_data);
 };
