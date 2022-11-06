@@ -3,3 +3,4 @@ all:
 	./main
 clean:
 	rm main
+	rm prog
