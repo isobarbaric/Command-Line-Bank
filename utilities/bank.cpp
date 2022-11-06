@@ -24,8 +24,72 @@ void Bank::simulate() {
     }
 }
 
+void Bank::add_user(string username, string password, int balance) {
+    // add to vector of customers
+    customers.push_back(User(username, password, balance));
+
+    // write to csv file
+    ofstream acc_db;
+    acc_db.open("utilities/data.csv", std::ios_base::app);
+    acc_db << "\n" << username << ", " << password << ", " << balance;
+    acc_db.close();
+}
+
 bool Bank::create_account() {
-    cout << "creating a new account";
+    cout << "Creating a new account for you:\n";
+    string username, password;
+
+    // verify this doesn't exist already
+    while (true) {
+        cout << "=> Enter your desired username: ";
+        cin >> username;
+        bool username_taken = false;
+        for (int i = 0; i < customers.size(); i++) {
+            if (customers[i].username == username) {
+                username_taken = true;
+            }
+        }
+        if (username_taken) {
+            cout << "This username belongs to another user. Please choose another username.\n";
+            continue;
+        }
+        cout << "=> Enter your desired password: ";
+
+        // set terminal to raw mode
+        system("stty raw");
+
+        char c;
+        bool firstTime = true;
+        while ((c = getchar()) != 13) {
+            if (firstTime) {
+                firstTime = false;
+                continue;
+            }
+            password += c;
+            cout << '*';
+        }
+        cout << '\n';
+
+        // reset terminal to normal cooked mode
+        system("stty cooked");
+
+        char deposit_choice;
+        cout << "\n=> Would you like to deposit any money into your account right now? Press Y/y for yes and N/n for no.\n";
+        cin >> deposit_choice; // introduce error checking for invalid input
+
+        int balance = 0;
+        if (deposit_choice == 'Y' || deposit_choice == 'y') {
+            cout << "=> How much money would you like to deposit in your account? ";
+            cin >> balance;
+        }
+
+        add_user(username, password, balance);
+
+        // success method
+        cout << "\n....Success! Thank you for choosing us!\n";
+
+        break;
+    }
 
     // temporarily returning true
     return true;
@@ -36,18 +100,16 @@ vector<User> Bank::load_users() {
     acc_db.open("data.csv");
     vector<User> account_holders;
     string current_user;
-
     bool firstLine = true;
-    if (acc_db.is_open()) { // always check whether the file is open
-        while(getline(acc_db, current_user)) {
-            if (firstLine) {
-                firstLine = false;
-                continue;
-            }
-            getline(acc_db, current_user);
-            account_holders.push_back(User::parse(current_user));
+    while(getline(acc_db, current_user)) {
+        if (firstLine) {
+            firstLine = false;
+            continue;
         }
+        getline(acc_db, current_user);
+        account_holders.push_back(User::parse(current_user));
     }
+    acc_db.close();
     return account_holders;
 }
 

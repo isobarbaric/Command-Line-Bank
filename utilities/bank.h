@@ -28,5 +28,6 @@ class Bank {
 
         // methods to be implemented
         bool create_account();
+        void add_user(string username, string password, int balance);
 
 };

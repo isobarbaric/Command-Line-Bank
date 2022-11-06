@@ -1,6 +1,5 @@
 all:
-	g++ -o prog main.cpp utilities/bank.cpp utilities/user.cpp
-	./main
+	g++ -o main main.cpp utilities/bank.cpp utilities/user.cpp
 clean:
 	rm main
 	rm prog
